@@ -13,3 +13,6 @@ htop
 neofetch
 tmuxinator
 bat
+clang
+clang-format
+
