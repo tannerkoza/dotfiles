@@ -89,6 +89,7 @@ plugins=(
     copypath
     copyfile
     extract
+    universalarchive 
     direnv
     keychain
     gpg-agent
@@ -126,3 +127,5 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+
+fpath+=~/.zfunc; autoload -Uz compinit; compinit
