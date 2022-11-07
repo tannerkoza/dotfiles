@@ -3,7 +3,9 @@
 install_oh_my_zsh() {
     # install ohmyzsh and symlink my-aliases.zsh
 
+    sudo apt install zsh
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    sleep 5
     cd .oh-my-zsh/custom/
     ln -s ~/.zsh/my-aliases.zsh .
 }
