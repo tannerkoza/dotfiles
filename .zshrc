@@ -78,6 +78,10 @@ plugins=(
 	aliases
 	alias-finder
 	thefuck
+	history
+	copybuffer
+	copypath
+	copyfile
 )
 
 source $ZSH/oh-my-zsh.sh
