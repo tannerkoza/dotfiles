@@ -3,6 +3,7 @@ alias tcn="mv --force -t ~/.local/share/Trash/files"
 alias cpv="rsync -ah --info=progress2"
 alias open="xdg-open ."
 alias src="source ~/.zshrc"
+alias update="sudo apt update && sudo apt upgrade"
 
 # functions
 function cl() {
