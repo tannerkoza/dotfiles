@@ -72,16 +72,18 @@ ZSH_THEME="gozilla"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-	git
-	zsh-autosuggestions
-	copypath
-	aliases
-	alias-finder
-	thefuck
-	history
-	copybuffer
-	copypath
-	copyfile
+    git
+    zsh-autosuggestions
+    copypath
+    aliases
+    alias-finder
+    thefuck
+    history
+    copybuffer
+    copypath
+    copyfile
+    extract
+    direnv
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -111,3 +113,18 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/tannerkoza/.anaconda3/bin/conda' 'shell.zsh' 'hook' 2>/dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/tannerkoza/.anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/tannerkoza/.anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/tannerkoza/.anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
