@@ -84,6 +84,7 @@ plugins=(
     copyfile
     extract
     direnv
+    keychain
 )
 
 source $ZSH/oh-my-zsh.sh
