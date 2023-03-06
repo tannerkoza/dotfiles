@@ -85,6 +85,7 @@ plugins=(
     extract
     direnv
     keychain
+    gpg-agent
 )
 
 source $ZSH/oh-my-zsh.sh
