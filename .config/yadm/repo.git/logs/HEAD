@@ -1,0 +1,7 @@
+0000000000000000000000000000000000000000 d31a2930b46f8bb5d6f801f9f652da6de0b916e0 tannerkoza <tannerkoza@gavlab-ws45.eng.auburn.edu> 1677881726 -0600	initial pull
+d31a2930b46f8bb5d6f801f9f652da6de0b916e0 b526f68e01879e193586a1a05c49ee5ae8c3f37d Tanner Koza <kozatanner@gmail.com> 1677882047 -0600	commit: Add keychain
+b526f68e01879e193586a1a05c49ee5ae8c3f37d 0000000000000000000000000000000000000000 Tanner Koza <kozatanner@gmail.com> 1677882087 -0600	Branch: renamed refs/heads/master to refs/heads/main
+0000000000000000000000000000000000000000 b526f68e01879e193586a1a05c49ee5ae8c3f37d Tanner Koza <kozatanner@gmail.com> 1677882087 -0600	Branch: renamed refs/heads/master to refs/heads/main
+b526f68e01879e193586a1a05c49ee5ae8c3f37d 2e3302c3adc2d5886397e6c6e4faa5b3e127292f Tanner Koza <kozatanner@gmail.com> 1678131946 -0600	commit: Add gpg-agent
+2e3302c3adc2d5886397e6c6e4faa5b3e127292f 26cf40aab7cf8ac5d3b6242a27673b67ff07245b Tanner Koza <kozatanner@gmail.com> 1678132367 -0600	commit: Add .zprofile with keychain command
+26cf40aab7cf8ac5d3b6242a27673b67ff07245b f6d19934101fba76f2158d5dd27d10bffc6a599b Tanner Koza <kozatanner@gmail.com> 1678133392 -0600	commit: Remove keychain command from profile

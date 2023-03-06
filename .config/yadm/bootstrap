@@ -19,3 +19,9 @@ install_thefuck() {
 
 install_oh_my_zsh
 install_thefuck
+sudo apt install keychain
+sudo apt install direnv
+
+
+
+
