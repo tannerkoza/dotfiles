@@ -17,6 +17,7 @@ install_thefuck() {
     pip3 install thefuck --user
 }
 
+sudo apt install curl
 install_oh_my_zsh
 install_thefuck
 sudo apt install keychain
