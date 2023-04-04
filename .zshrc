@@ -88,6 +88,8 @@ plugins=(
     gpg-agent
 )
 
+zstyle :omz:plugins:keychain agents gpg,ssh
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -118,15 +120,15 @@ source $ZSH/oh-my-zsh.sh
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/tannerkoza/.anaconda3/bin/conda' 'shell.zsh' 'hook' 2>/dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/tannerkoza/.anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/tannerkoza/.anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/tannerkoza/.anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
+# __conda_setup="$('/home/tannerkoza/.anaconda3/bin/conda' 'shell.zsh' 'hook' 2>/dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/home/tannerkoza/.anaconda3/etc/profile.d/conda.sh" ]; then
+#         . "/home/tannerkoza/.anaconda3/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/home/tannerkoza/.anaconda3/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
 # <<< conda initialize <<<
