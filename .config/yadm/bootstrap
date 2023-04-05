@@ -60,7 +60,7 @@ sudo apt update && sudo apt upgrade
 
 # install apt-packages from dotfile
 print_msg "installing apt-packages from .apt-packages file..."
-xargs sudo apt-get install <~/.apt-packages
+xargs sudo apt-get install -y <~/.apt-packages
 
 # install pip-packages from dotfile
 # print_msg "installing pip-packages from .pip-packages file..."
