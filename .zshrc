@@ -90,6 +90,7 @@ plugins=(
 
 # add ssh-agent to keychain plugin
 zstyle :omz:plugins:keychain agents gpg,ssh
+zstyle :omz:plugins:keychain identities 
 
 source $ZSH/oh-my-zsh.sh
 
