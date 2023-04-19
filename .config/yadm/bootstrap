@@ -70,12 +70,12 @@ xargs sudo apt-get install -y <~/.apt-packages
 print_msg "installing thefuck as a pip package..."
 pip3 install thefuck --user
 
+# install docker
+install_docker
+
 # install oh-my-zsh with curl
 install_zsh_plugins
 print_msg "installing oh-my-zsh without overwriting .zshrc..."
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
-# install docker
-install_docker
 
 print_footer
