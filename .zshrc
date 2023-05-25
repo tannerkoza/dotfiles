@@ -86,6 +86,7 @@ plugins=(
     direnv
     keychain
     gpg-agent
+    poetry
 )
 
 # add ssh-agent to keychain plugin
