@@ -5,6 +5,9 @@ alias open="xdg-open ."
 alias src="source ~/.zshrc"
 alias update="sudo apt update && sudo apt upgrade"
 
+# matlab
+alias mlb="tmux new -s matlab -d 'matlab .'"
+
 # functions
 function cl() {
     DIR="$*"
