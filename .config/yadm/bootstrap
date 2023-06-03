@@ -66,7 +66,6 @@ sudo apt update && sudo apt upgrade
 # install apt-packages from dotfile
 print_msg "installing apt-packages from .apt-packages file..."
 xargs sudo apt-get install -y <~/.apt-packages
-
 # install pip-packages from dotfile
 # print_msg "installing pip-packages from .pip-packages file..."
 # pip install -r ~/.pip-packages
@@ -74,6 +73,9 @@ xargs sudo apt-get install -y <~/.apt-packages
 # install thefuck as pip package
 print_msg "installing thefuck as a pip package..."
 pip3 install thefuck --user
+
+# install poetry
+install_poetry
 
 # install docker
 install_docker
