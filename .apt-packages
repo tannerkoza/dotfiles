@@ -8,3 +8,4 @@ python3-setuptools
 ca-certificates
 gnupg
 tmux
+cloc
