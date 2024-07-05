@@ -77,7 +77,6 @@ plugins=(
     copypath
     aliases
     alias-finder
-    thefuck
     history
     copybuffer
     copypath
