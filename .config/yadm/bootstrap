@@ -35,7 +35,8 @@ print_msg() {
 
 install_zsh_plugins() {
   print_msg "installing zsh plugins..."
-  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.zsh}/plugins/zsh-autosuggestionsmkdir $ZSH_CUSTOM/plugins/poetry
+  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.zsh}/plugins/zsh-autosuggestions
+  mkdir $ZSH_CUSTOM/plugins/poetry
   poetry completions zsh > $ZSH_CUSTOM/plugins/poetry/_poetry		
 }
 
@@ -69,10 +70,6 @@ xargs sudo apt-get install -y <~/.apt-packages
 # install pip-packages from dotfile
 # print_msg "installing pip-packages from .pip-packages file..."
 # pip install -r ~/.pip-packages
-
-# install thefuck as pip package
-print_msg "installing thefuck as a pip package..."
-pip3 install thefuck --user
 
 # install poetry
 install_poetry
