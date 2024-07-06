@@ -58,6 +58,12 @@ install_poetry() {
  curl -sSL https://install.python-poetry.org | python3 -
 }
 
+install_pyenv () {
+  print_msg "installing pyenv..."
+  sudo sudo apt install libffi-dev zlib1g zlib1g-dev libssl-dev libbz2-dev libsqlite3-dev liblzma-dev libedit-dev libreadline-dev python3-tk tk-dev
+  curl https://pyenv.run | bash
+}
+
 ### Execute Commands ###
 print_header
 
@@ -76,6 +82,9 @@ install_poetry
 
 # install docker
 install_docker
+
+# install pyenv
+install_pyenv
 
 # install oh-my-zsh with curl
 install_zsh_plugins
