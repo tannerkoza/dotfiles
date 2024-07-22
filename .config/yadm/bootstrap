@@ -3,6 +3,8 @@
 ### Environment Variables & Constants ###
 export KEEP_ZSHRC=yes
 
+SYSTEM_TYPE=$(uname -s)
+
 # colors for msg output
 red="\033[91m"
 green="\033[92m"
@@ -37,50 +39,90 @@ install_zsh_plugins() {
   print_msg "installing zsh plugins..."
   git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.zsh}/plugins/zsh-autosuggestions
   mkdir $ZSH_CUSTOM/plugins/poetry
-  poetry completions zsh > $ZSH_CUSTOM/plugins/poetry/_poetry		
+  poetry completions zsh >$ZSH_CUSTOM/plugins/poetry/_poetry
 }
 
 install_docker() {
   print_msg "installing docker..."
-  sudo apt-get remove docker docker-engine docker.io containerd runc
-  sudo mkdir -m 0755 -p /etc/apt/keyrings
-  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-  echo \
-    "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+
+  # if [ "$SYSTEM_TYPE" = "Darwin" ]; then
+
+  # fi
+
+  if [ "$SYSTEM_TYPE" = "Linux" ]; then
+    sudo apt-get remove docker docker-engine docker.io containerd runc
+    sudo mkdir -m 0755 -p /etc/apt/keyrings
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    echo \
+      "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
   "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" |
-    sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
-  sudo apt-get update
-  sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+      sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
+    sudo apt-get update
+    sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  fi
 }
 
 install_poetry() {
- print_msg "installing poetry..."
- curl -sSL https://install.python-poetry.org | python3 -
+  print_msg "installing poetry..."
+  if [ "$SYSTEM_TYPE" = "Darwin" ]; then
+    brew install pyenv --head
+  fi
+
+  if [ "$SYSTEM_TYPE" = "Linux" ]; then
+    curl -sSL https://install.python-poetry.org | python3 -
+  fi
 }
 
-install_pyenv () {
+install_pyenv() {
   print_msg "installing pyenv..."
   sudo sudo apt install libffi-dev zlib1g zlib1g-dev libssl-dev libbz2-dev libsqlite3-dev liblzma-dev libedit-dev libreadline-dev python3-tk tk-dev
   curl https://pyenv.run | bash
 }
 
-install_lazygit () {
-print_msg "installing lazygit..."
-LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
-curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
-tar xf lazygit.tar.gz lazygit
-sudo install lazygit /usr/local/bin
+install_lazygit() {
+  print_msg "installing lazygit..."
+  LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
+  curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+  tar xf lazygit.tar.gz lazygit
+  sudo install lazygit /usr/local/bin
+}
+
+update_and_install_packages() {
+  if [ "$SYSTEM_TYPE" = "Darwin" ]; then
+    print_msg "updating and upgrading brew packages..."
+    sudo brew update && sudo brew upgrade
+  fi
+
+  if [ "$SYSTEM_TYPE" = "Linux" ]; then
+    print_msg "updating and upgrading apt-packages..."
+    sudo apt update && sudo apt upgrade
+
+    # install apt-packages from dotfile
+    print_msg "installing apt-packages from .apt-packages file..."
+    xargs sudo apt-get install -y <~/.apt-packages
+  fi
+}
+
+install_homebrew() {
+  # install homebrew if it's missing
+  if ! command -v brew >/dev/null 2>&1; then
+    print_msg "installing homebrew..."
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+  fi
+
+  if [ -f "$HOME/.Brewfile" ]; then
+    print_msg "updating homebrew bundle..."
+    brew bundle --global
+  fi
 }
 
 ### Execute Commands ###
 print_header
 
-print_msg "updating and upgrading apt-packages..."
-sudo apt update && sudo apt upgrade
+if [ "$SYSTEM_TYPE" = "Darwin" ]; then
+  install_homebrew
+fi
 
-# install apt-packages from dotfile
-print_msg "installing apt-packages from .apt-packages file..."
-xargs sudo apt-get install -y <~/.apt-packages
 # install pip-packages from dotfile
 # print_msg "installing pip-packages from .pip-packages file..."
 # pip install -r ~/.pip-packages
