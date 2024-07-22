@@ -64,19 +64,19 @@ install_docker() {
 
 install_poetry() {
   print_msg "installing poetry..."
+  curl -sSL https://install.python-poetry.org | python3 -
+}
+
+install_pyenv() {
+  print_msg "installing pyenv..."
   if [ "$SYSTEM_TYPE" = "Darwin" ]; then
     brew install pyenv --head
   fi
 
   if [ "$SYSTEM_TYPE" = "Linux" ]; then
-    curl -sSL https://install.python-poetry.org | python3 -
+    sudo sudo apt install libffi-dev zlib1g zlib1g-dev libssl-dev libbz2-dev libsqlite3-dev liblzma-dev libedit-dev libreadline-dev python3-tk tk-dev
+    curl https://pyenv.run | bash
   fi
-}
-
-install_pyenv() {
-  print_msg "installing pyenv..."
-  sudo sudo apt install libffi-dev zlib1g zlib1g-dev libssl-dev libbz2-dev libsqlite3-dev liblzma-dev libedit-dev libreadline-dev python3-tk tk-dev
-  curl https://pyenv.run | bash
 }
 
 install_lazygit() {
