@@ -2,3 +2,7 @@ git:
   paging:
     colorArg: always
     pager: delta --dark --paging=never
+    
+services:
+  'git.aspn.us': 'gitlab:git.aspn.us'
+  'git.is4s.com': 'gitlab:git.is4s.com'
