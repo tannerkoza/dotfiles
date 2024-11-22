@@ -9,3 +9,5 @@ ca-certificates
 gnupg
 tmux
 cloc
+htop
+neofetch

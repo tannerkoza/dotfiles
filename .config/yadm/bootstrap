@@ -62,21 +62,9 @@ install_docker() {
   fi
 }
 
-install_poetry() {
-  print_msg "installing poetry..."
-  curl -sSL https://install.python-poetry.org | python3 -
-}
-
-install_pyenv() {
-  print_msg "installing pyenv..."
-  if [ "$SYSTEM_TYPE" = "Darwin" ]; then
-    brew install pyenv --head
-  fi
-
-  if [ "$SYSTEM_TYPE" = "Linux" ]; then
-    sudo sudo apt install libffi-dev zlib1g zlib1g-dev libssl-dev libbz2-dev libsqlite3-dev liblzma-dev libedit-dev libreadline-dev python3-tk tk-dev
-    curl https://pyenv.run | bash
-  fi
+install_rye() {
+  print_msg "installing rye..."
+  curl -sSf https://rye.astral.sh/get | bash
 }
 
 install_lazygit() {
@@ -119,6 +107,8 @@ install_homebrew() {
 ### Execute Commands ###
 print_header
 
+update_and_install_packages
+
 if [ "$SYSTEM_TYPE" = "Darwin" ]; then
   install_homebrew
 fi
@@ -127,20 +117,18 @@ fi
 # print_msg "installing pip-packages from .pip-packages file..."
 # pip install -r ~/.pip-packages
 
-# install poetry
-install_poetry
+# install rye
+install_rye
 
 # install docker
 install_docker
-
-# install pyenv
-install_pyenv
 
 # install lazygit
 install_lazygit
 
 # install oh-my-zsh with curl
 install_zsh_plugins
+
 print_msg "installing oh-my-zsh without overwriting .zshrc..."
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
