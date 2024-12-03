@@ -70,7 +70,7 @@ install_rye() {
 install_lazygit() {
   print_msg "installing lazygit..."
   LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
-  curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+  curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_arm64.tar.gz"
   tar xf lazygit.tar.gz lazygit
   sudo install lazygit /usr/local/bin
 }
@@ -121,7 +121,11 @@ fi
 install_rye
 
 # install docker
-install_docker
+if [ -x "$(command -v docker)" ]; then
+    print_msg "docker is installed..."
+else
+    install_docker
+fi
 
 # install lazygit
 install_lazygit
