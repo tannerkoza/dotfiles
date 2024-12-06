@@ -7,6 +7,9 @@ alias update="sudo apt update && sudo apt upgrade"
 # matlab
 alias mlb="tmux new -s matlab -d 'matlab .'"
 
+# tmuxinator
+alias mux="tmuxinator"
+
 # functions
 function cl() {
     DIR="$*"

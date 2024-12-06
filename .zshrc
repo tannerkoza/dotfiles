@@ -66,14 +66,11 @@ ZSH_THEME="cloud"
 # Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM="$HOME/.zsh"
 
-# pyenv setup
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
 # rye source
 source $HOME/.rye/env
 
+# tmuxinator
+export EDITOR=code
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
@@ -94,14 +91,11 @@ plugins=(
     direnv
     keychain
     gpg-agent
-    poetry
-    pyenv
-    rye
 )
 
 # add ssh-agent to keychain plugin
 zstyle :omz:plugins:keychain agents gpg,ssh
-zstyle :omz:plugins:keychain identities 
+zstyle :omz:plugins:keychain identities github gitlab-is4s gitlab-aspn gitlab-antcenter gitlab-cps 
 
 source $ZSH/oh-my-zsh.sh
 
