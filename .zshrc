@@ -80,6 +80,7 @@ export EDITOR=code
 plugins=(
     git
     zsh-autosuggestions
+    zsh-syntax-highlighting
     copypath
     aliases
     alias-finder
