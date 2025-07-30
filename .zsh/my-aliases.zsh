@@ -4,6 +4,7 @@ alias cpv="rsync -ah --info=progress2"
 alias src="source ~/.zshrc"
 alias update="sudo apt update && sudo apt upgrade"
 alias bat="batcat"
+alias mux="tmuxinator"
 
 # matlab
 alias mlb="tmux new -s matlab -d 'matlab .'"
