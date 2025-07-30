@@ -66,9 +66,6 @@ ZSH_THEME="cloud"
 # Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM="$HOME/.zsh"
 
-# rye source
-source $HOME/.rye/env
-
 # tmuxinator
 export EDITOR=code
 
