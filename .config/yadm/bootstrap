@@ -28,12 +28,34 @@ print_footer() {
   echo "${yellow}
   DOTFILE BOOTSTRAP IS COMPLETE!${red}
   Log out${blue} and${red} login${blue} to apply changes!
-" >&1
+"
 }
 
 print_msg() {
   echo "${green}=>${no_color}${blue}" "${@}" "${no_color}" >&1
 }
+
+install_tmuxinator() { 
+  print_msg "installing tmuxinator..."
+  sudo gem install tmuxinator
+  wget https://raw.githubusercontent.com/tmuxinator/tmuxinator/master/completion/tmuxinator.zsh -O /usr/local/share/zsh/site-functions/_tmuxinator # add zsh completions
+}
+
+install_wezterm(){
+  print_msg "installing WezTerm..."
+  # Import the WezTerm GPG key
+curl -fsSL https://apt.fury.io/wez/gpg.key \
+  | sudo gpg --dearmor -o /etc/apt/keyrings/wezterm-fury.gpg
+
+
+# Add the WezTerm repository
+echo 'deb [signed-by=/etc/apt/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' \
+  | sudo tee /etc/apt/sources.list.d/wezterm.list
+
+  sudo apt install wezterm
+}
+  
+
 
 install_zsh_plugins() {
   print_msg "installing zsh plugins..."
@@ -44,26 +66,26 @@ install_zsh_plugins() {
 install_docker() {
   print_msg "installing docker..."
 
-  # if [ "$SYSTEM_TYPE" = "Darwin" ]; then
+  if [ -x "$(command -v docker)" ]; then
+    print_msg "docker is installed..."
+  else
+    sudo install -m 0755 -d /etc/apt/keyrings
+    sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+    sudo chmod a+r /etc/apt/keyrings/docker.asc
 
-  # fi
-
-  if [ "$SYSTEM_TYPE" = "Linux" ]; then
-    sudo apt-get remove docker docker-engine docker.io containerd runc
-    sudo mkdir -m 0755 -p /etc/apt/keyrings
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
     echo \
-      "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" |
-      sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
-    sudo apt-get update
-    sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
   fi
 }
 
-install_rye() {
-  print_msg "installing rye..."
-  curl -sSf https://rye.astral.sh/get | bash
+install_uv() {
+  print_msg "installing uv..."
+  curl -LsSf https://astral.sh/uv/install.sh | sh
 }
 
 install_lazygit() {
@@ -75,59 +97,28 @@ install_lazygit() {
 }
 
 update_and_install_packages() {
-  if [ "$SYSTEM_TYPE" = "Darwin" ]; then
-    print_msg "updating and upgrading brew packages..."
-    sudo brew update && sudo brew upgrade
-  fi
-
   if [ "$SYSTEM_TYPE" = "Linux" ]; then
     print_msg "updating and upgrading apt-packages..."
     sudo apt update && sudo apt upgrade
 
     # install apt-packages from dotfile
     print_msg "installing apt-packages from .apt-packages file..."
-    xargs sudo apt-get install -y <~/.apt-packages
-  fi
-}
-
-install_homebrew() {
-  # install homebrew if it's missing
-  if ! command -v brew >/dev/null 2>&1; then
-    print_msg "installing homebrew..."
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-  fi
-
-  if [ -f "$HOME/.Brewfile" ]; then
-    print_msg "updating homebrew bundle..."
-    brew bundle --global
+    xargs sudo apt-get install -y <~/.config/yadm/.apt-packages
   fi
 }
 
 ### Execute Commands ###
 print_header
-
 update_and_install_packages
-
-if [ "$SYSTEM_TYPE" = "Darwin" ]; then
-  install_homebrew
-fi
-
-# install pip-packages from dotfile
-# print_msg "installing pip-packages from .pip-packages file..."
-# pip install -r ~/.pip-packages
-
-# install rye
-install_rye
+install_uv
+install_lazygit
+install_tmuxinator
+install_wezterm
 
 # install docker
-if [ -x "$(command -v docker)" ]; then
-    print_msg "docker is installed..."
-else
-    install_docker
-fi
 
-# install lazygit
-install_lazygit
+install_docker
+
 
 # install oh-my-zsh with curl
 install_zsh_plugins
@@ -136,3 +127,4 @@ print_msg "installing oh-my-zsh without overwriting .zshrc..."
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 print_footer
+
