@@ -35,27 +35,22 @@ print_msg() {
   echo "${green}=>${no_color}${blue}" "${@}" "${no_color}" >&1
 }
 
-install_tmuxinator() { 
+install_tmuxinator() {
   print_msg "installing tmuxinator..."
   sudo gem install tmuxinator
-  wget https://raw.githubusercontent.com/tmuxinator/tmuxinator/master/completion/tmuxinator.zsh -O /usr/local/share/zsh/site-functions/_tmuxinator # add zsh completions
+  sudo wget https://raw.githubusercontent.com/tmuxinator/tmuxinator/master/completion/tmuxinator.zsh -O /usr/local/share/zsh/site-functions/_tmuxinator # add zsh completions
 }
 
-install_wezterm(){
+install_wezterm() {
   print_msg "installing WezTerm..."
-  # Import the WezTerm GPG key
-curl -fsSL https://apt.fury.io/wez/gpg.key \
-  | sudo gpg --dearmor -o /etc/apt/keyrings/wezterm-fury.gpg
+  curl -fsSL https://apt.fury.io/wez/gpg.key \
+    | sudo gpg --dearmor -o /etc/apt/keyrings/wezterm-fury.gpg
 
-
-# Add the WezTerm repository
-echo 'deb [signed-by=/etc/apt/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' \
-  | sudo tee /etc/apt/sources.list.d/wezterm.list
+  echo 'deb [signed-by=/etc/apt/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' \
+    | sudo tee /etc/apt/sources.list.d/wezterm.list
 
   sudo apt install wezterm
 }
-  
-
 
 install_zsh_plugins() {
   print_msg "installing zsh plugins..."
@@ -74,12 +69,12 @@ install_docker() {
     sudo chmod a+r /etc/apt/keyrings/docker.asc
 
     echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-sudo apt-get update
+      "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+      $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+      sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    sudo apt-get update
 
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
   fi
 }
 
@@ -96,6 +91,11 @@ install_lazygit() {
   sudo install lazygit /usr/local/bin
 }
 
+install_ohmyzsh(){
+  print_msg "installing oh-my-zsh without overwriting .zshrc..."
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+}
+
 update_and_install_packages() {
   if [ "$SYSTEM_TYPE" = "Linux" ]; then
     print_msg "updating and upgrading apt-packages..."
@@ -107,24 +107,13 @@ update_and_install_packages() {
   fi
 }
 
-### Execute Commands ###
 print_header
 update_and_install_packages
 install_uv
 install_lazygit
 install_tmuxinator
 install_wezterm
-
-# install docker
-
 install_docker
-
-
-# install oh-my-zsh with curl
+install_ohmyzsh
 install_zsh_plugins
-
-print_msg "installing oh-my-zsh without overwriting .zshrc..."
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
 print_footer
-
