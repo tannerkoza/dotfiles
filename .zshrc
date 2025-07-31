@@ -126,3 +126,5 @@ source $ZSH/oh-my-zsh.sh
 
 
 fpath+=~/.zfunc; autoload -Uz compinit; compinit
+
+. "$HOME/.local/bin/env"

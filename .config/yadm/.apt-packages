@@ -5,6 +5,7 @@ clang-format
 cloc
 curl
 direnv
+fonts-firacode
 gnome-shell-extension-manager
 gnome-shell-extensions
 gnome-tweaks
